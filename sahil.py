@@ -264,7 +264,7 @@ async def setup_handlers(client):
                                             else:
                                                 formatted_group_id = str(group_id)
                                             
-                                            result_text = f"**~ {group_title} 🚩™**\n\n.getip 2 {formatted_group_id}\n\n📶 **Results**\n\n**Session:** {sid}\n**IP:** {fp}\n**PORT:** N/A\n**CMD:** `/attack {fp}`"
+                                            result_text = f"**~ {group_title} **\n\n.getip 2 {formatted_group_id}\n\n📶 **Results**\n\n**Session:** {sid}\n**IP:** {fp}\n**PORT:** N/A\n**CMD:** `/attack {fp}`"
                                             
                                             results.append(builder.article(
                                                 title=f"✅ IP Extracted",
