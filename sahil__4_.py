@@ -17,7 +17,7 @@ except:
 
 BOT_TOKEN = "8161665118:AAFrISckGPcTGoXNkd9eBe-Vyz83_b1-WpA"
 API_ID, API_HASH, OWNER_ID = 25723056, "cbda56fac135e92b755e1243aefe9697", 8101867786
-MONGO_URI = "mongodb://localhost:27017"
+MONGO_URI = "mongodb+srv://Animal:7388@janwarr.bkmi4px.mongodb.net/?retryWrites=true&w=majority"
 
 sessions = {}
 entity_cache = {}  # cache: (sid, chat_input) -> entity
