@@ -13,8 +13,8 @@ try:
 except:
     pass
 
-BOT_TOKEN = "8161665118:AAFrISckGPcTGoXNkd9eBe-Vyz83_b1-WpA"
-API_ID, API_HASH, OWNER_ID = 25723056, "cbda56fac135e92b755e1243aefe9697", 8101867786
+BOT_TOKEN = "8581779077:AAEzNNUebfRucvAr-RpK3QLrf3J6ANAHyz4"
+API_ID, API_HASH, OWNER_ID = 25723056, "cbda56fac135e92b755e1243aefe9697", 8713502336
 USERS_FILE = "approved_users.json"
 
 # ── In-memory stores (no DB needed) ──────────────────────────────────────────
