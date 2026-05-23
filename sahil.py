@@ -13,7 +13,7 @@ try:
 except:
     pass
 
-BOT_TOKEN = "8581779077:AAEzNNUebfRucvAr-RpK3QLrf3J6ANAHyz4"
+BOT_TOKEN = "8690434506:AAF6SM8My8UnAsLhqjbcUd6yNsJsjMcfTuc"
 API_ID, API_HASH, OWNER_ID = 25723056, "cbda56fac135e92b755e1243aefe9697", 8842115436
 USERS_FILE = "approved_users.json"
 
