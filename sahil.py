@@ -59,9 +59,7 @@ async def send_chunks(client, chat_id, results, header=""):
     for i, ch in enumerate(chunks):
         part = f"{'Part '+str(i+1)+'/'+str(len(chunks))+chr(10) if len(chunks)>1 else ''}{chr(10).join(ch)}"
         if i == len(chunks)-1:
-            part += f"
-
-{summary}"
+            part += f"{summary}"
         await client.send_message(chat_id, part)
 
 def get_cmd(t):
