@@ -17,7 +17,7 @@ try:
     import uvloop; asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 except: pass
 
-BOT_TOKEN  = "8690434506:AAF6SM8My8UnAsLhqjbcUd6yNsJsjMcfTuc"
+BOT_TOKEN  = "8877183231:AAF6uNSJnnbaEOCsc-HxFX8FueQQ8-_13EU"
 API_ID     = 25723056
 API_HASH   = "cbda56fac135e92b755e1243aefe9697"
 OWNER_ID   = 8842115436
