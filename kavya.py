@@ -1,3 +1,4 @@
+from pyrogram import enums
 import json, random, zipfile, os, asyncio, shutil
 from datetime import datetime
 from telethon import TelegramClient, events
@@ -204,27 +205,27 @@ def get_cmd(t):
 HOME_TEXT = "нєу {name}!\n\n➻ ᴀ ғᴀsᴛ & ᴘᴏᴡᴇʀғᴜʟ ɪᴩ ᴇxᴛʀᴀᴄᴛᴏʀ ʙᴏᴛ.\n──────────────────\n๏ ᴄʟɪᴄᴋ ʜᴇʟᴩ ᴛᴏ sᴇᴇ ᴄᴏᴍᴍᴀɴᴅs."
 HELP_TEXT = (
     "📚 **Commands**\n\n"
-    "**Sessions:**\n"
-    "`/addsession <string>` — add via string\n"
-    "`/delsession <sid>` — delete session\n"
-    "`/clearsessions` — clear all\n"
-    "`/exportsessions` — export ZIP\n"
-    "Send `.zip` — bulk load\n\n"
-    "**Actions:**\n"
-    "`/join <sid|all> <chat>`\n"
-    "`/leave <sid|all> <chat>`\n"
-    "`/getip <sid> <chat>`\n"
-    "`@bot <sid> <chat>` — inline IP\n\n"
-    "**Users (owner only):**\n"
-    "`/approve <id|reply>`\n"
-    "`/remove <id>`\n"
-    "`/approved`"
+    "**🗂 Sessions:**\n"
+    "• /addsession <string> — add via string\n"
+    "• /delsession <sid> — delete session\n"
+    "• /clearsessions — clear all\n"
+    "• /exportsessions — export ZIP\n"
+    "• Send .zip — bulk load\n\n"
+    "**⚡️ Actions:**\n"
+    "• /join <sid|all> <chat>\n"
+    "• /leave <sid|all> <chat>\n"
+    "• /getip <sid> <chat>\n"
+    "• @bot <sid> <chat> — inline IP + copy\n\n"
+    "**👥 Users (owner only):**\n"
+    "• /approve <id|reply>\n"
+    "• /remove <id>\n"
+    "• /approved"
 )
 
 def home_buttons(uid, username):
     rows = [[InlineKeyboardButton("➕ Add to Group", url=f"https://t.me/{username}?startgroup=true")],
             [InlineKeyboardButton("📚 Help", callback_data="help"),
-             InlineKeyboardButton("👤 Owner", url="https://t.me/dustbydust")]]
+             InlineKeyboardButton("👤 Owner", url="https://t.me/h3rzah")]]
     if uid == OWNER_ID: rows.append([InlineKeyboardButton("🔐 Owner Panel", callback_data="owner_panel")])
     return InlineKeyboardMarkup(rows)
 
@@ -241,7 +242,7 @@ async def setup_pyrogram(app: Client):
         me = await app.get_me()
         await m.reply(HELP_TEXT, reply_markup=ikb_url(
             [(f"➕ Add to Group", f"https://t.me/{me.username}?startgroup=true")],
-            [("👤 Owner", "https://t.me/dustbydust")]
+            [("👤 Owner", "https://t.me/h3rzah")]
         ))
 
     @app.on_message(filters.command("approve") & filters.user(OWNER_ID))
@@ -249,7 +250,7 @@ async def setup_pyrogram(app: Client):
         try:
             tid = int(m.command[1]) if len(m.command) > 1 else \
                   (m.reply_to_message.from_user.id if m.reply_to_message else None)
-            if not tid: return await m.reply("❌ `/approve <id>` or reply")
+            if not tid: return await m.reply("❌ /approve <id> or reply")
             if tid == OWNER_ID: return await m.reply("❌ Owner always approved")
             if tid in approved_users: return await m.reply(f"✅ Already: `{tid}`")
             approved_users[tid] = {"name": "Approved"}; save_users()
@@ -273,7 +274,7 @@ async def setup_pyrogram(app: Client):
 
     @app.on_message(filters.command("addsession") & filters.create(lambda _, __, m: is_approved(m.from_user.id)))
     async def cmd_addsession(_, m):
-        if len(m.command) < 2: return await m.reply("❌ `/addsession <string_session>`")
+        if len(m.command) < 2: return await m.reply("❌ /addsession <string_session>")
         msg = await m.reply("⏳ Connecting…")
         try:
             string = m.command[1].strip()
@@ -297,14 +298,14 @@ async def setup_pyrogram(app: Client):
     @app.on_message(filters.command("delsession") & filters.create(lambda _, __, m: is_approved(m.from_user.id)))
     async def cmd_delsession(_, m):
         try: sid = int(m.command[1])
-        except: return await m.reply("❌ `/delsession <sid>`")
+        except: return await m.reply("❌ /delsession <sid>")
         if sid not in sessions: return await m.reply(f"❌ S{sid} not found")
         await kill_session(sid, sessions[sid])
         await m.reply(f"✅ S{sid} deleted")
 
     @app.on_message(filters.command("join") & filters.create(lambda _, __, m: is_approved(m.from_user.id)))
     async def cmd_join(_, m):
-        if len(m.command) < 3: return await m.reply("❌ `/join <sid|all> <chat>`")
+        if len(m.command) < 3: return await m.reply("❌ /join <sid|all> <chat>")
         sid_arg, chat = m.command[1], " ".join(m.command[2:])
         if sid_arg.lower() == 'all':
             if not sessions: return await m.reply("❌ No sessions")
@@ -323,7 +324,7 @@ async def setup_pyrogram(app: Client):
 
     @app.on_message(filters.command("leave") & filters.create(lambda _, __, m: is_approved(m.from_user.id)))
     async def cmd_leave(_, m):
-        if len(m.command) < 3: return await m.reply("❌ `/leave <sid|all> <chat>`")
+        if len(m.command) < 3: return await m.reply("❌ /leave <sid|all> <chat>")
         sid_arg, chat = m.command[1], " ".join(m.command[2:])
         if sid_arg.lower() == 'all':
             if not sessions: return await m.reply("❌ No sessions")
@@ -342,7 +343,7 @@ async def setup_pyrogram(app: Client):
 
     @app.on_message(filters.command("getip") & filters.create(lambda _, __, m: is_approved(m.from_user.id)))
     async def cmd_getip(_, m):
-        if len(m.command) < 3: return await m.reply("❌ `/getip <sid> <chat>`")
+        if len(m.command) < 3: return await m.reply("❌  /getip <sid> <chat>")
         try: sid = int(m.command[1])
         except: return await m.reply("❌ Invalid session ID")
         if sid not in sessions: return await m.reply(f"❌ S{sid} not found")
@@ -483,7 +484,7 @@ async def setup_pyrogram(app: Client):
         me = await app.get_me()
         await q.message.edit_text(HELP_TEXT, reply_markup=ikb_url(
             [(f"➕ Add to Group", f"https://t.me/{me.username}?startgroup=true")],
-            [("👤 Owner", "https://t.me/dustbydust")]
+            [("👤 Owner", "https://t.me/h3rzah")]
         ))
         await q.answer()
 
@@ -535,7 +536,7 @@ async def main():
     log("🚀 Starting…"); load_users()
     log(f"✅ {len(approved_users)} approved users")
     await load_existing_sessions()
-    pyro = Client("bot_session", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+    pyro = Client("bot_session", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN, parse_mode=enums.ParseMode.MARKDOWN)
     await setup_pyrogram(pyro)
     await pyro.start()
     log(f"✅ Bot: @{(await pyro.get_me()).username}")
