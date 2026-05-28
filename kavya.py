@@ -248,9 +248,17 @@ async def setup_pyrogram(app: Client):
     @app.on_message(filters.command("approve") & filters.user(OWNER_ID))
     async def cmd_approve(_, m):
         try:
-            tid = int(m.command[1]) if len(m.command) > 1 else \
-                  (m.reply_to_message.from_user.id if m.reply_to_message else None)
-            if not tid: return await m.reply("❌ /approve <id> or reply")
+            tid = None
+            if len(m.command) > 1:
+                arg = m.command[1].strip().lstrip("@")
+                if arg.lstrip("-").isdigit():
+                    tid = int(arg)
+                else:
+                    u = await app.get_users(arg)
+                    tid = u.id
+            elif m.reply_to_message:
+                tid = m.reply_to_message.from_user.id
+            if not tid: return await m.reply("❌ /approve <id|@username> or reply")
             if tid == OWNER_ID: return await m.reply("❌ Owner always approved")
             if tid in approved_users: return await m.reply(f"✅ Already: `{tid}`")
             approved_users[tid] = {"name": "Approved"}; save_users()
