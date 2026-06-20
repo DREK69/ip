@@ -21,7 +21,7 @@ except: pass
 BOT_TOKEN  = "8877183231:AAF6uNSJnnbaEOCsc-HxFX8FueQQ8-_13EU"
 API_ID     = 25723056
 API_HASH   = "cbda56fac135e92b755e1243aefe9697"
-OWNER_ID   = 8842115436
+OWNER_ID   = 8406994939
 USERS_FILE = "approved_users.json"
 
 sessions, entity_cache, approved_users = {}, {}, {}
